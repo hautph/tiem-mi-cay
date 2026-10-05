@@ -1,68 +1,67 @@
-# Tiệm Mì Cay — local recreation
+# Tiệm Mì Cay — Phiên bản mô phỏng chạy cục bộ
 
-An independently written recreation of [aenhatrang.com](https://aenhatrang.com/), with a Vietnamese interface, original SVG illustrations, local fonts and responsive desktop/mobile layouts. Version 2 replaces the earlier simplified rules with a much closer cooking and management simulation. See [docs/PARITY.md](docs/PARITY.md) for the remaining differences and [AUDIT.md](AUDIT.md) for verification.
+Một dự án game mô phỏng quản lý quán mì cay độc lập, với giao diện hoàn toàn bằng tiếng Việt, hình ảnh minh họa định dạng SVG tự vẽ, font chữ cục bộ và giao diện đáp ứng (responsive) linh hoạt trên cả máy tính lẫn thiết bị di động. Phiên bản 2 (Version 2) mang đến một hệ thống mô phỏng nấu ăn và quản lý tiệm mì chi tiết, sống động và hấp dẫn.
 
-**Play online:** [Tiệm Mì Cay on GitHub Pages](https://buicongnguyen.github.io/game-shop/).
+**Chơi trực tuyến:** [Tiệm Mì Cay tại game.heytram.vn](https://game.heytram.vn).
 
-## Run
+## Cách chạy dự án
 
-Requires Node.js 20 or later. No dependency installation is needed to play.
+Yêu cầu môi trường có cài đặt Node.js từ phiên bản 20 trở lên. Không cần cài đặt thêm thư viện phụ thuộc bên ngoài để chơi.
 
 ```powershell
-cd 'C:\Users\n\source\repos\game\_shop'
 npm start
 ```
 
-Open **http://localhost:4173**. The server accepts connections only from this computer. Press Ctrl+C to stop it. For another port, set `$env:PORT=4174` before `npm start`.
+Sau đó mở trình duyệt và truy cập **http://localhost:4173**. Server chỉ chấp nhận kết nối từ chính máy tính của bạn. Nhấn `Ctrl+C` trong terminal để dừng server. Nếu muốn đổi cổng khác, hãy gán biến môi trường `$env:PORT=4174` trước khi chạy `npm start`.
 
-Use the HTTP server, rather than opening `index.html` as a file. `npm run build` creates a static website in `dist/`. Relative asset paths support both a site root and a project subdirectory such as `/game-shop/`.
+*Lưu ý:* Hãy dùng HTTP server thay vì mở trực tiếp file `index.html`. Lệnh `npm run build` sẽ xuất trang web tĩnh vào thư mục `dist/`. Đường dẫn tài nguyên tương đối hỗ trợ cả gốc trang web lẫn thư mục con (ví dụ: `/game-shop/`).
 
-## Gameplay
+## Lối chơi (Gameplay)
 
-- Start with 400,000₫, a 4.0 reputation and empty shelves. Plan a cart with quantities 0–99, or use the suggested order. Confirm purchases and open the shop.
-- The catalog contains 32 ingredients, 20 equipment/accessory upgrades, 6 staff members, 13 decorations and 10 progression levels. Ingredients have individual purchase/sale prices, unlock costs and expiry dates.
-- Read each customer's broth, toppings and spice request. Taking a bowl, starting noodles and adding ingredients immediately consumes stock. Already-added ingredients cannot be removed or refunded.
-- Noodles cook for 5.2 seconds, or 4.2 with the stove. Collect between 50% and 78% for ideal doneness. Raw/soft noodles can be served at a rating penalty; unattended noodles burn. Extra pots and staff enable parallel cooking.
-- The service screen always fits the display. Phones use one column, phones on their side two columns, and PCs and tablets in landscape three columns: customers and order, cooking station, pantry. Customers, the order ticket, pots, chili, discard, Serve and the day tools are never scrolled away; only the ingredient pantry scrolls when a small screen cannot show every ingredient at once. The order ticket ticks off the broth, toppings and spice level that the bowl already matches.
-- Each chili tap adds one level, up to 7. A finished bowl matches any suitable waiting order, including another unfinished dish in a group. A true mismatch wastes the bowl and upsets the selected customer.
-- Customers arrive over a 210-second day. New arrivals stop near closing, then existing orders have up to 60 additional seconds. Closing early asks for confirmation, and closing again during the grace period ends immediately. Prices, reputation, events and equipment influence trade.
-- Stock expires by batch. End-of-day accounts include full rent, utilities, equipment electricity and staff wages; cash can become negative. Loan repayments separate principal and interest. Three daily goals award cash and XP.
-- A new shop starts with one coached bowl: the day clock waits while a coach outlines each next control.
-- From day 2, street stories interrupt service (a gas cylinder runs out, a spill, a tour bus, an inspection…). Payment incidents also interrupt it: a dine-and-dash, wrong change, a request for credit, a complaint. Service pauses and every choice has its own cost.
-- Some guests are in a hurry, change their mind about spice, or haggle after eating.
-- When a dish is sold out, the ticket shows a Handle button: rush-buy, offer a swap, drop the topping, wait for the buyer, or apologise. Tapping an empty ingredient rush-buys it.
-- Debts, windfalls, level-ups, what's new, the neighbours' surprises and the cooks' leave arrive as cards the next morning, in that order. If the till can't cover the minimum restock, the shop can't open until you take a loan or start a fresh shop.
-- Reviews state their cause. You can reply to a review within two days: a polite reply can win a star back, and a rude one costs one.
-- Equipment, staff, decorations and the review histogram are in the management tabs. Sound effects and music are synthesised in the browser, with their own toggles.
-- Every object has its own original illustration:
-  - customers drawn by type, with moods that follow their patience;
-  - staff portraits and a chili-chef mascot;
-  - a pot for each broth;
-  - the bowl drawn from its real contents;
-  - a shop scene that shows the awning, decorations and every upgrade you buy;
-  - a street behind the customers that turns from morning to night and gets rain on rainy days.
-- Once the shop is on the delivery app, a few orders a day are too far for the app's riders. After cooking you ride the scooter yourself, dodging potholes, puddles and cones, or hire a courier. A clean ride earns a bonus and a star.
-- From level 9 a spaceport brings interplanetary orders. Choose how much fuel to load, collect fuel cells on the way, dodge asteroids, debris and comets, and dock at one of five planets.
-- Optional market bargaining, secret-broth memory play and bowl washing add daily activities. A seeded daily challenge runs separately and keeps the main shop intact. Its records are local to this browser.
-- Small motions follow the reference's timings:
-  - guests walk in and bob while they wait, sweat as patience runs low, and leave as a happy or angry ghost (hearts for a perfect bowl);
-  - noodles are scooped with a splash in the broth colour, broth falls as droplets, toppings drop in;
-  - the chili bottle squeezes, with flames from level 5;
-  - the bowl flies to the guest, and the wallet counts up;
-  - situation choices lock for 1.2 s with a progress bar.
+- Bắt đầu với 400.000₫, 4.0 điểm danh tiếng và các kệ hàng trống rỗng. Lên kế hoạch nhập hàng với số lượng 0–99 cho mỗi món, hoặc dùng đơn gợi ý sẵn. Xác nhận thanh toán và mở cửa đón khách.
+- Danh mục bao gồm 32 nguyên liệu, 20 trang thiết bị/phụ kiện nâng cấp, 6 nhân viên, 13 đồ trang trí và 10 cấp độ tiến trình. Mỗi nguyên liệu đều có giá nhập/giá bán riêng, chi phí mở khóa và hạn sử dụng riêng biệt.
+- Đọc kỹ yêu cầu của khách hàng về nước dùng, các loại topping và cấp độ cay. Việc lấy tô, trụng mì và bỏ nguyên liệu sẽ tiêu hao kho ngay lập tức. Các nguyên liệu đã bỏ vào tô thì không thể gỡ ra hoặc hoàn lại.
+- Thời gian nấu mì là 5.2 giây (hoặc 4.2 giây nếu đã nâng cấp bếp). Hãy gắp mì trong khoảng từ 50% đến 78% để đạt độ chín hoàn hảo. Mì còn sống hoặc bị nhừ sẽ bị trừ điểm đánh giá; bỏ quên mì quá lâu sẽ bị cháy khét. Mua thêm nồi và tuyển thêm nhân viên sẽ giúp bạn nấu nhiều tô cùng lúc.
+- Màn hình phục vụ luôn co giãn vừa vặn với kích thước hiển thị: Điện thoại dọc dùng 1 cột, điện thoại xoay ngang dùng 2 cột, máy tính và máy tính bảng nằm ngang dùng 3 cột (Khách & Đơn hàng, Khu vực nấu nướng, Tủ nguyên liệu). Khách hàng, phiếu gọi món, nồi mì, lọ ớt, nút Bỏ món, nút Giao món và các công cụ trong ngày luôn được cố định không bị cuộn mất; chỉ có tủ nguyên liệu là cuộn được khi màn hình nhỏ không hiển thị hết tất cả món cùng lúc. Phiếu gọi món sẽ tự động tích chọn nước dùng, topping và cấp độ cay mà tô mì hiện tại đã khớp.
+- Mỗi lần nhấn vào lọ ớt sẽ tăng 1 cấp độ cay, tối đa cấp độ 7. Một tô mì hoàn chỉnh có thể giao cho bất kỳ đơn hàng nào đang chờ phù hợp, kể cả món khác chưa làm xong trong cùng một nhóm khách. Nếu giao sai đơn hoàn toàn, tô mì sẽ bị lãng phí và khách hàng được chọn sẽ bực bội bỏ đi.
+- Mỗi ngày làm việc kéo dài trong 210 giây để khách ghé quán. Khách mới sẽ dừng đến khi quán gần giờ đóng cửa, sau đó các đơn đang chờ sẽ có thêm tối đa 60 giây gia hạn. Đóng cửa sớm sẽ yêu cầu xác nhận, và xác nhận đóng cửa thêm lần nữa trong thời gian gia hạn sẽ kết thúc ngày ngay lập tức. Giá cả, độ danh tiếng, sự kiện và trang thiết bị nâng cấp sẽ tác động trực tiếp đến lượng khách đến quán.
+- Hàng hóa trong kho hết hạn theo từng lô. Báo cáo tài chính cuối ngày tính đầy đủ tiền thuê mặt bằng, điện nước, điện tiêu thụ của thiết bị và tiền lương nhân viên; số dư tiền mặt có thể bị âm. Khoản trả nợ được tách biệt rõ ràng giữa tiền gốc và tiền lãi. Có ba mục tiêu hằng ngày giúp bạn nhận thêm tiền mặt và điểm kinh nghiệm (XP).
+- Quán mới mở sẽ bắt đầu với 1 tô mì có người hướng dẫn: đồng hồ trong ngày sẽ tạm dừng trong khi huấn luyện viên khoanh vùng từng thao tác tiếp theo.
+- Từ ngày thứ 2 trở đi, các mẩu chuyện đường phố sẽ ngẫu nhiên xuất hiện làm gián đoạn việc phục vụ (hết bình gas, đổ vỡ, xe du lịch ghé quán, thanh tra kiểm tra...). Những sự cố thanh toán cũng có thể xảy ra: khách ăn quẹt tiền, thối nhầm tiền thừa, khách xin nợ, hoặc khiếu nại chất lượng. Màn hình phục vụ sẽ tạm dừng và mỗi quyết định xử lý đều đi kèm chi phí/hậu quả riêng.
+- Một số vị khách có thể đang vội, đột ngột đổi ý về độ cay, hoặc mặc cả kì kèo giá sau khi đã ăn xong.
+- Khi một món bị hết nguyên liệu trong kho, phiếu gọi món sẽ hiện nút "Xử lý": mua gấp (giá cao hơn), đề xuất đổi món khác, bỏ bớt topping, bảo khách đợi, hoặc xin lỗi khách. Bấm trực tiếp vào nguyên liệu đã hết cũng sẽ mua gấp món đó.
+- Nợ nần, các khoản tiền bất ngờ, thăng cấp, thông tin cập nhật mới, quà bất ngờ từ hàng xóm và đơn xin nghỉ phép của đầu bếp sẽ xuất hiện dưới dạng các thẻ thông báo vào sáng hôm sau theo đúng thứ tự. Nếu số dư trong két không đủ để nhập số lượng tối thiểu, quán sẽ không thể mở cửa cho đến khi bạn vay tiền hoặc bắt đầu một quán mới.
+- Khách đánh giá quán sẽ nêu rõ lý do. Bạn có thể phản hồi đánh giá trong vòng 2 ngày: một câu trả lời lịch sự có thể gỡ lại 1 sao, còn trả lời thô lỗ sẽ khiến bạn bị mất thêm 1 sao.
+- Trang bị, nhân sự, trang trí và biểu đồ phân bố đánh giá đều nằm trong các tab Quản lý. Hiệu ứng âm thanh và nhạc nền được tổng hợp trực tiếp bằng Web Audio trong trình duyệt, có nút bật/tắt riêng.
+- Mỗi đối tượng trong game đều có hình minh họa nguyên bản riêng:
+  - Khách hàng được vẽ theo từng nhóm tính cách, biểu cảm khuôn mặt thay đổi theo mức độ kiên nhẫn;
+  - Chân dung nhân viên và linh vật Bếp trưởng Ớt Hiểm;
+  - Mỗi loại nước dùng có một kiểu nồi riêng;
+  - Tô mì được vẽ trực quan đúng theo những gì đang có bên trong (nước dùng, sợi mì, topping, ớt);
+  - Khung cảnh quán thể hiện rõ mái hiên, đồ trang trí và từng món đồ bạn đã nâng cấp;
+  - Khung cảnh con phố phía sau khách hàng chuyển dần từ ban ngày sang đêm muộn, và có mưa rơi vào những ngày trời mưa.
+- Khi quán đã đăng ký ứng dụng giao hàng (delivery app), mỗi ngày sẽ có vài đơn quá xa đối với tài xế của app. Sau khi nấu xong, bạn có thể tự mình lái xe máy đi giao, né ổ gà, vũng nước và chóp nón giao thông, hoặc thuê dịch vụ giao hàng nhanh. Một chuyến giao hàng an toàn, không va chạm sẽ mang lại tiền thưởng và sao đánh giá.
+- Từ cấp độ 9 trở đi, trạm không gian sẽ mở ra các đơn hàng liên hành tinh. Hãy tính toán lượng nhiên liệu mang theo, thu thập các bình năng lượng trên đường đi, né thiên thạch, rác vũ trụ và sao chổi để hạ cánh an toàn xuống 1 trong 5 hành tinh.
+- Các hoạt động thường nhật bổ sung: trả giá ngoài chợ, trò chơi trí nhớ tìm công thức nước dùng bí mật, và rửa bát. Chế độ Thử thách hằng ngày (Daily Challenge) theo hạt giống (seed) chạy độc lập và không ảnh hưởng đến quán chính của bạn. Kỷ lục của chế độ này được lưu cục bộ trên trình duyệt.
+- Các chuyển động mượt mà bám sát cơ chế gốc:
+  - Khách đi vào quán, nhún nhảy trong lúc đợi, toát mồ hôi khi sắp hết kiên nhẫn, và bay đi như một bóng ma vui vẻ hoặc giận dữ (thả tim nếu tô mì hoàn hảo);
+  - Mì được vớt lên với hiệu ứng văng nước đúng màu nước dùng, nước dùng nhỏ giọt, topping rơi vào tô;
+  - Chai tương ớt bóp nhẹ, phun lửa khi đạt từ cấp độ cay 5 trở lên;
+  - Tô mì bay đến tay khách, và tiền trong ví tăng số liên tục;
+  - Các lựa chọn tình huống bị khóa trong 1.2 giây kèm thanh tiến trình để tránh bấm nhầm.
 
-  Everything runs on transform and opacity, pauses behind dialogs and switches off with **Chuyển động** (motion).
-- The street behind the guests is alive. Sparrows sit on the wires, people walk past (with umbrellas in the rain), scooters and a bus drive by on wide screens. A flock flies home at sunset, the lamp flickers on with moths, a cat walks the rooftops, a kite flies at weekends and your pet keeps you company. Street stories get their own short scenes.
-- **Kitchen love story:** from level 7, the noodle cook Bé Ngò and the broth cook Anh Sả fall in love over three stages and ask for days off. Granting means cooking alone. Refusing risks a walkout or half pay. A wedding gift brings wedding candy and a busier day.
-- **Neighbours:** six fictional shops on the street. Send up to three surprises a day: a rat, a tipsy guest, the ward patrol, a haggling guest, a tour group or a celebrity. They send some back during your next day, and a street board compares lifetime profits. The neighbours are game characters, not real players.
-- The mascot Ớt Hiểm sits on the shop sign and gives tips, contextual when reviews are waiting or a loan is owed. The pet in the shop picture can be petted.
-- A short terms-of-play gate comes first. A what's-new card shows once per version. **Cài đặt** (Settings) offers install help and the terms. The game can be added to the home screen and plays offline after the first visit; updates are offered on the prep screen, never mid-service.
+  Mọi hoạt ảnh đều tối ưu bằng `transform` và `opacity`, tự dừng khi mở hộp thoại và có thể tắt hoàn toàn qua tùy chọn **Chuyển động**.
+- Con phố phía sau khách luôn sống động: Chim sẻ đậu trên dây điện, người qua lại (che ô khi trời mưa), xe máy và xe buýt chạy qua trên màn hình rộng. Đàn chim bay về tổ lúc hoàng hôn, đèn đường chập chờn thu hút bướm đêm, mèo đi dạo trên mái nhà, thả diều vào cuối tuần và thú cưng luôn đồng hành cùng bạn. Các câu chuyện đường phố đều có hoạt cảnh ngắn riêng.
+- **Chuyện tình căn bếp:** Từ cấp độ 7, phụ bếp mì Bé Ngò và đầu bếp nước dùng Anh Sả sẽ nảy sinh tình cảm qua 3 giai đoạn và xin nghỉ phép hẹn hò. Đồng ý đồng nghĩa bạn phải tự nấu một mình. Từ chối có nguy cơ họ bỏ việc hoặc giảm năng suất. Một món quà cưới chúc phúc sẽ mang lại kẹo cưới và giúp quán đông khách hơn.
+- **Hàng xóm:** Sáu cửa tiệm lân cận trên cùng dãy phố. Bạn có thể gửi tối đa 3 bất ngờ mỗi ngày sang quán họ: thả chuột, gửi khách say xỉn, báo tổ trật tự phường kiểm tra, gửi khách hay trả giá, dẫn đoàn du lịch hoặc mời người nổi tiếng. Họ cũng sẽ "đáp lễ" lại quán bạn vào ngày hôm sau, và bảng xếp hạng dãy phố sẽ so sánh doanh thu trọn đời giữa các quán. Hàng xóm hoàn toàn là nhân vật trong game, không phải người chơi thật.
+- Linh vật Ớt Hiểm ngồi trên bảng hiệu quán sẽ đưa ra các lời khuyên hữu ích, đặc biệt là khi có đánh giá đang chờ trả lời hoặc quán đang vướng nợ. Bạn cũng có thể vuốt ve chú thú cưng trong bức tranh quán.
+- Trò chơi có màn hình xác nhận điều khoản trước khi bắt đầu. Thẻ thông báo "Có gì mới" xuất hiện 1 lần cho mỗi phiên bản mới. Mục **Cài đặt** cung cấp hướng dẫn cài đặt ứng dụng và xem lại điều khoản. Game có thể thêm vào màn hình chính (PWA) và chơi ngoại tuyến hoàn toàn sau lần truy cập đầu tiên; thông báo cập nhật chỉ hiện ở màn hình chuẩn bị hàng, tuyệt đối không làm phiền giữa giờ bán.
 
-The game pauses while dialogs are open and when the tab is hidden. Returning to a hidden active game shows an explicit resume dialog. Stock, the bowl, noodle pots, customers and progression persist together. Old version-1 saves are migrated and their original JSON retained as a backup; the version-1 engine never saved unfinished bowls, so that missing old state cannot be recovered.
+Game sẽ tự động tạm dừng khi mở các hộp thoại hoặc khi bạn chuyển sang tab khác. Khi quay lại tab game đang chơi, một hộp thoại tiếp tục rõ ràng sẽ hiện ra. Kho hàng, tô mì đang làm, nồi mì, khách hàng và tiến trình chơi đều được lưu đồng bộ cùng nhau. Dữ liệu lưu từ phiên bản 1 cũ sẽ được tự động nâng cấp sang định dạng mới và giữ lại bản sao lưu JSON gốc (lưu ý: bộ engine v1 trước đây không lưu tô mì chưa nấu xong nên phần trạng thái dở dang đó không thể phục hồi).
 
-Use **Menu → Xuất bản lưu** to download a JSON backup, or **Nhập bản lưu** to restore one. Saves belong to a browser and origin, including the port. Export before clearing browser data or changing ports. If browser storage is unavailable, export is the way to retain the current session.
+Sử dụng **Menu → Xuất bản lưu** để tải về file sao lưu JSON, hoặc **Nhập bản lưu** để khôi phục lại tiến trình. Dữ liệu lưu gắn liền với từng trình duyệt và tên miền/cổng truy cập. Hãy luôn xuất bản lưu trước khi dọn dẹp dữ liệu duyệt web hoặc đổi cổng server.
 
-## Verification
+## Kiểm thử & Xác thực chất lượng
 
 ```powershell
 npm test
@@ -74,40 +73,40 @@ npm run test:pages
 npm run test:simulation
 ```
 
-The browser runner starts and closes its own local test server. It runs the parity, interaction, layout, install/offline (`pwa-browser.mjs`), effects (`fx-browser.mjs`) and living-street (`life-browser.mjs`) suites. `SUITES=a.mjs,b.mjs` picks suites, and `ONLY=<name part>` runs a subset of the parity scenarios. CI (`test:pages`) runs all of them except the living-street suite, which takes several minutes; its rules are covered by `tests/life.test.js` and the layout suite. Tests cover engine invariants, reference-based mechanics, side games, actual cooking controls, save/import/export, pauses, keyboard focus, local competition, art loading and responsive layouts. A seeded 100-day simulation checks cash flow, inventory batches and live-save round trips. Screenshots and machine-readable reports are written to `test-results/`. Historical version-1 tests are retained in `tests/archive-v1/` and are excluded from the current commands.
+Bộ chạy kiểm thử trình duyệt sẽ tự khởi động và tắt server kiểm thử cục bộ. Nó sẽ thực thi toàn bộ các bộ test: kiểm tra tính tương đương (parity), tương tác người dùng, bố cục hiển thị (layout), cài đặt/ngoại tuyến (`pwa-browser.mjs`), hiệu ứng (`fx-browser.mjs`) và con phố sống động (`life-browser.mjs`). Có thể truyền tham số `SUITES=a.mjs,b.mjs` để chọn bộ test, hoặc `ONLY=<tên kịch bản>` để chạy một phần kịch bản. CI (`test:pages`) chạy toàn bộ trừ suite con phố sống động (vì tốn vài phút chạy); các quy tắc của nó đã được bao phủ bởi `tests/life.test.js` và suite bố cục. Các bài kiểm thử bao quát từ bất biến của engine, cơ chế gốc, mini-game, thao tác nấu nướng thực tế, lưu/nhập/xuất file, tạm dừng game, phím điều hướng, cạnh tranh với hàng xóm, tải đồ họa đến độ co giãn màn hình. Kịch bản mô phỏng 100 ngày được cấp seed cố định giúp kiểm tra dòng tiền, hạn dùng kho hàng và tính toàn vẹn của dữ liệu lưu. Ảnh chụp màn hình và báo cáo máy đọc được xuất vào thư mục `test-results/`.
 
-`npm run test:pages` serves only the compiled `dist/` directory beneath `/game-shop/` and runs the full browser suite there. Requests that accidentally target the host root fail this check.
+Lệnh `npm run test:pages` sẽ đóng gói và chạy server trên thư mục `dist/` dưới đường dẫn `/game-shop/` rồi chạy kiểm thử e2e tại đó nhằm đảm bảo không có đường dẫn tài nguyên nào bị lỗi khi đưa lên máy chủ thật.
 
-Both browser commands include held mouse/touch/keyboard presses while timers advance, canceled gestures, pot expiry and chef transitions. Layout checks cover phones (320×568 to 390×844), a phone on its side (844×390), tablets (768×1024, 1024×768) and PCs (1280×720 to 1920×1080), with effects and street actors on screen: every cooking control must be visible and touchable without scrolling, touch targets stay at least 44px, real finger swipes scroll the pantry without adding ingredients, and every dialog keeps its close and action buttons on screen. The tests use browser device emulation; physical iOS/Android hardware was not tested.
+Kiểm tra bố cục bao phủ đầy đủ các kích thước: màn hình điện thoại (320×568 đến 390×844), điện thoại xoay ngang (844×390), máy tính bảng (768×1024, 1024×768) và máy tính để bàn (1280×720 đến 1920×1080). Đảm bảo mọi nút bấm nấu nướng đều thấy được và bấm được mà không cần cuộn trang, vùng chạm tối thiểu 44px, vuốt ngón tay cuộn tủ nguyên liệu mà không bị kích hoạt bấm nhầm, và mọi hộp thoại đều giữ nút đóng/hành động nằm trong tầm nhìn.
 
-## GitHub Pages deployment
+## Triển khai lên GitHub Pages
 
-The repository uses the SSH remote `git@github.com:buicongnguyen/game-shop.git`. Pushing `main` runs `.github/workflows/pages.yml`: install dependencies, run engine tests, build, verify the compiled project path in Chromium, and deploy the `dist/` artifact to GitHub Pages. The workflow can also be started manually from Actions. Local backups, dependencies, build output and test results are excluded from Git.
+Kho mã nguồn sử dụng remote SSH: `git@github.com:buicongnguyen/game-shop.git`. Khi đẩy nhánh `main`, GitHub Actions `.github/workflows/pages.yml` sẽ tự động chạy: cài đặt dependencies, chạy unit test của engine, build dự án, kiểm tra bản build trên Chromium, và đưa thư mục `dist/` lên GitHub Pages. Bạn cũng có thể kích hoạt workflow này thủ công trong tab Actions. Các file sao lưu cục bộ, node_modules, thư mục build và kết quả test đều được cấu hình bỏ qua trong Git.
 
-GitHub Pages and localhost have separate browser storage. Export a save from the local game and import it on the live site to transfer progress.
+*Lưu ý:* GitHub Pages và localhost sử dụng vùng nhớ trình duyệt riêng biệt. Bạn có thể dùng tính năng Xuất bản lưu từ máy cục bộ rồi Nhập bản lưu trên trang online để chuyển tiến trình chơi.
 
-## Scope and files
+## Cấu trúc thư mục & Tệp tin
 
-This project has its own code and artwork. It does not use the reference game's source, assets, account system or backend at runtime. It runs locally with no external requests. A service worker caches the built site for offline play (only on HTTPS or with `?sw` locally). Online leaderboards, cloud accounts and real-player competition are not connected; remaining offline approximations are listed in [docs/PARITY.md](docs/PARITY.md). Blender and Unity are unnecessary for this 2D browser interface: editable SVGs stay sharp on every screen, weigh about 1 KB per ingredient and take the chosen awning colour. The bowl and cooking pots are drawn from game state, so the bowl shows its real broth, noodles, toppings and chili.
+Dự án này sở hữu toàn bộ mã nguồn và tranh vẽ nguyên bản độc lập. Game chạy hoàn toàn cục bộ, không gửi yêu cầu ra internet. Service Worker lưu cache trang web tĩnh để chơi offline (trên HTTPS hoặc thêm cờ `?sw` khi chạy local). Dự án không cần dùng đến Blender hay Unity: định dạng SVG thuần giúp hình ảnh luôn sắc nét trên mọi độ phân giải màn hình, dung lượng nhẹ chỉ khoảng 1 KB mỗi nguyên liệu và đổi màu mái hiên linh hoạt. Tô mì và nồi nấu được kết xuất trực tiếp theo trạng thái game thực tế.
 
-- `src/game.js`: state, cooking, customers, situations, economy, persistence and validation.
-- `src/situations.js`: the street stories and the effects of each choice.
-- `src/voice.js`: original Vietnamese customer names, order lines, reviews and reply suggestions.
-- `src/audio.js`: Web Audio sound effects and two original music loops, synthesised live.
-- `src/catalog.js`: factual ingredient/equipment/staff/decoration configuration.
-- `src/sidequests.js`: optional daily mini-game state and rules.
-- `src/art/people.js`, `src/art/bowl.js`, `src/art/scene.js`: original art generators for the characters, the kitchen and the shop scene and street (see [docs/ART-STYLE.md](docs/ART-STYLE.md)).
-- `src/ride.js`, `src/planets.js`: the scooter and starship mini-games (canvas), and the planets, fuel and flight rules.
-- `src/neighbours.js`: the fictional neighbours, surprises and the street board.
-- `src/fx.js`, `src/fx.css`: the kitchen and customer effects layer (pooled, transform and opacity only).
-- `src/life.js`, `src/life.css`, `src/art/life.js`: the living street and its sprites, the love-story medallion and the surprise icons.
-- `src/meta-ui.js`: terms of play, what's new, install help and the mascot's tips.
-- `src/pwa.js`, `sw.js`, `manifest.webmanifest`, `src/art/app-icon.js`, `tools/icons.mjs`: home-screen install, the offline worker and the app icons.
-- `src/app.js`, `src/minigames-ui.js`, `src/ui.js`: interface and controls.
-- `src/style.css`: layout, appearance and responsive behavior for phones, tablets and PCs.
-- `public/assets/`: original illustrations, local fonts and font licenses.
-- `server.mjs`, `tools/`: local server, build and verification runner.
-- `reference-values.md`: observed rules used for the independent implementation.
-- `PLAN.md`, `docs/PARITY.md`, `AUDIT.md`: execution plan, parity matrix and findings.
+- [`src/game.js`](file:///C:/games/tiem-mi-cay/src/game.js): Trạng thái game, cơ chế nấu ăn, khách hàng, tình huống, kinh tế, lưu trữ và xác thực.
+- [`src/situations.js`](file:///C:/games/tiem-mi-cay/src/situations.js): Các câu chuyện đường phố và kết quả của từng lựa chọn.
+- [`src/voice.js`](file:///C:/games/tiem-mi-cay/src/voice.js): Tên khách hàng tiếng Việt nguyên bản, câu thoại gọi món, đánh giá và gợi ý phản hồi.
+- [`src/audio.js`](file:///C:/games/tiem-mi-cay/src/audio.js): Hiệu ứng âm thanh Web Audio và 2 bản nhạc nền lặp được tổng hợp trực tiếp.
+- [`src/catalog.js`](file:///C:/games/tiem-mi-cay/src/catalog.js): Cấu hình dữ liệu nguyên liệu, trang bị, nhân viên, đồ trang trí.
+- [`src/sidequests.js`](file:///C:/games/tiem-mi-cay/src/sidequests.js): Trạng thái và quy tắc của các mini-game hằng ngày.
+- [`src/art/people.js`](file:///C:/games/tiem-mi-cay/src/art/people.js), [`src/art/bowl.js`](file:///C:/games/tiem-mi-cay/src/art/bowl.js), [`src/art/scene.js`](file:///C:/games/tiem-mi-cay/src/art/scene.js): Bộ tạo đồ họa tự vẽ cho nhân vật, căn bếp, khung cảnh quán và đường phố (xem [docs/ART-STYLE.md](docs/ART-STYLE.md)).
+- [`src/ride.js`](file:///C:/games/tiem-mi-cay/src/ride.js), [`src/planets.js`](file:///C:/games/tiem-mi-cay/src/planets.js): Mini-game lái xe máy và tàu vũ trụ (vẽ bằng canvas), quy tắc hành tinh, nhiên liệu và đường bay.
+- [`src/neighbours.js`](file:///C:/games/tiem-mi-cay/src/neighbours.js): Hệ thống quán hàng xóm, các trò bất ngờ và bảng xếp hạng dãy phố.
+- [`src/fx.js`](file:///C:/games/tiem-mi-cay/src/fx.js), [`src/fx.css`](file:///C:/games/tiem-mi-cay/src/fx.css): Lớp hiệu ứng thị giác trong bếp và khách hàng (sử dụng pool đối tượng, chỉ dùng transform và opacity).
+- [`src/life.js`](file:///C:/games/tiem-mi-cay/src/life.js), [`src/life.css`](file:///C:/games/tiem-mi-cay/src/life.css), [`src/art/life.js`](file:///C:/games/tiem-mi-cay/src/art/life.js): Con phố sống động và các sprite hoạt cảnh, huy hiệu chuyện tình bếp và icon bất ngờ.
+- [`src/meta-ui.js`](file:///C:/games/tiem-mi-cay/src/meta-ui.js): Giao diện điều khoản, thông tin phiên bản mới, hướng dẫn cài đặt PWA và mẹo từ linh vật.
+- [`src/pwa.js`](file:///C:/games/tiem-mi-cay/src/pwa.js), [`sw.js`](file:///C:/games/tiem-mi-cay/sw.js), [`manifest.webmanifest`](file:///C:/games/tiem-mi-cay/manifest.webmanifest), [`src/art/app-icon.js`](file:///C:/games/tiem-mi-cay/src/art/app-icon.js), [`tools/icons.mjs`](file:///C:/games/tiem-mi-cay/tools/icons.mjs): Cài đặt màn hình chính, service worker offline và icon ứng dụng.
+- [`src/app.js`](file:///C:/games/tiem-mi-cay/src/app.js), [`src/minigames-ui.js`](file:///C:/games/tiem-mi-cay/src/minigames-ui.js), [`src/ui.js`](file:///C:/games/tiem-mi-cay/src/ui.js): Giao diện người dùng và bộ điều khiển tương tác.
+- [`src/style.css`](file:///C:/games/tiem-mi-cay/src/style.css): Bố cục tổng thể, giao diện và phản hồi đa kích thước màn hình (responsive).
+- `public/assets/`: Các hình minh họa gốc, font chữ cục bộ và giấy phép font.
+- [`server.mjs`](file:///C:/games/tiem-mi-cay/server.mjs), `tools/`: Server HTTP nội bộ, script đóng gói build và bộ chạy kiểm thử.
+- `reference-values.md`: Các chỉ số và quy tắc quan sát được dùng để xây dựng game độc lập.
+- `PLAN.md`, `docs/PARITY.md`, `AUDIT.md`: Kế hoạch thực hiện, ma trận tương quan và kết quả kiểm định.
 
-See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for reference and font attribution.
+Xem thêm [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) để biết thông tin bản quyền và nguồn gốc font chữ.

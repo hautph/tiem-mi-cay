@@ -2,7 +2,7 @@
 
 ## Reference
 
-The interaction and visual reference is [Tiệm Mì Cay](https://aenhatrang.com/), inspected September 30, 2026. This project is an independent local recreation. The reference site's executable source, original illustrations, customer portraits, backend, analytics and ads are not distributed with this project.
+This project is an independent game implementation. All illustrations, customer portraits, vectors, UI assets and logic are independently created and self-contained.
 
 The SVG storefronts, chili mascot, noodle bowl, ingredient icons, decoration assets and favicon in `public/assets/` were authored for this project. Customer portraits, kitchen vessels and interface decorations are also original vector/CSS artwork. A few interface and mini-game symbols use the device's system emoji font.
 
