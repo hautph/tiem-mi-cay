@@ -7,7 +7,7 @@ import { esc } from './ui.js';
 import { formatMoney, TEA_COST, RIDE_FEE, STAFF, UPGRADES } from './game.js';
 import { mascot } from './art/people.js';
 
-export const TERMS_VERSION = '1.1001', TERMS_DATE = '05/10/2026';
+export const TERMS_VERSION = '1.1002', TERMS_DATE = '05/10/2026';
 export const PROJECT_EMAIL = 'hellendaothanh@gmail.com';
 const TERMS_TITLE = 'Điều khoản chơi game', DECLINE_TITLE = 'Tiệm sẽ chờ bạn';
 const freezeRows = rows => Object.freeze(rows.map(row => Object.freeze(row)));
