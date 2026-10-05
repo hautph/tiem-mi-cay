@@ -48,17 +48,17 @@ function fakeContext() {
 
 // ---- Terms
 
-test('terms: version 1 of 01/10/2026 with about ten numbered sections and the project link', () => {
-  assert.equal(M.TERMS_VERSION, 1);
-  assert.equal(M.TERMS_DATE, '01/10/2026');
+test('terms: version 1.1000+ with about ten numbered sections and the project link', () => {
+  assert.match(String(M.TERMS_VERSION), /^1\.\d+$/);
+  assert.match(M.TERMS_DATE, /^\d{2}\/\d{2}\/\d{4}$/);
   assert.equal(M.TERMS.length, 10, 'the welcome line promises ten points');
   for (const section of M.TERMS) { nonEmpty(section.title); nonEmpty(section.text); }
   const html = M.termsBodyHTML();
   assert.match(html, /mười điều nhỏ/);
-  assert.match(html, /^<p class="meta-updated">Cập nhật ngày 01\/10\/2026 · phiên bản 1<\/p>/);
+  assert.match(html, new RegExp(`^<p class="meta-updated">Cập nhật ngày ${M.TERMS_DATE.replace(/\//g, '\\/')} · phiên bản ${M.TERMS_VERSION.replace(/\./g, '\\.')}<\\/p>`));
   assert.match(html, /<ol class="meta-terms">/);
   assert.equal((html.match(/<li>/g) || []).length, M.TERMS.length);
-  assert.match(html, /<a href="https:\/\/github\.com\/buicongnguyen\/game-shop" target="_blank" rel="noopener noreferrer">github\.com\/<wbr>buicongnguyen\/<wbr>game-shop<\/a>/);
+  assert.match(html, /<a href="mailto:hellendaothanh@gmail\.com">hellendaothanh@gmail\.com<\/a>/);
 });
 
 test('terms cover every promised point', () => {
@@ -66,12 +66,12 @@ test('terms cover every promised point', () => {
   for (const point of [/miễn phí/, /mua bán/, /quảng cáo/, /giải thưởng/, /đồ ảo/, /giá trị thật/, /mọi lứa tuổi/, /dưới 16 tuổi/, /bố mẹ/, /3 tiếng/,
     /trình duyệt/, /xuất bản lưu/, /nhập lại/, /Xóa dữ liệu trình duyệt/, /không có tài khoản/, /máy chủ/, /thống kê/, /hàng xóm/, /bảng tin/,
     /không phải người chơi thật/, /Tên tiệm/, /chỉ nằm trên máy này/, /sửa tay/, /tái hiện/, /người hâm mộ/, /mã nguồn, hình vẽ, lời thoại và âm thanh/,
-    /không liên kết/, /đồng ý lần nữa/, /GitHub/]) assert.match(text, point);
+    /không liên kết/, /đồng ý lần nữa/, /email/]) assert.match(text, point);
 });
 
 test('termsAccepted compares the stored version with TERMS_VERSION', () => {
-  for (const prefs of [undefined, null, {}, { terms: null }, { terms: {} }, { terms: { version: 0 } }, { terms: { version: M.TERMS_VERSION - 1, at: 5 } }]) assert.equal(M.termsAccepted(prefs), false, JSON.stringify(prefs));
-  for (const prefs of [{ terms: { version: 1, at: Date.now() } }, { terms: { version: 2 } }]) assert.equal(M.termsAccepted(prefs), true, JSON.stringify(prefs));
+  for (const prefs of [undefined, null, {}, { terms: null }, { terms: {} }, { terms: { version: 0 } }, { terms: { version: 1, at: 5 } }, { terms: { version: '0.999', at: 5 } }]) assert.equal(M.termsAccepted(prefs), false, JSON.stringify(prefs));
+  for (const prefs of [{ terms: { version: M.TERMS_VERSION, at: Date.now() } }, { terms: { version: '99.0' } }]) assert.equal(M.termsAccepted(prefs), true, JSON.stringify(prefs));
 });
 
 test('the terms gate locks the dialog until the box is ticked, then hands back the record', () => {

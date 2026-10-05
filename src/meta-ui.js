@@ -7,8 +7,8 @@ import { esc } from './ui.js';
 import { formatMoney, TEA_COST, RIDE_FEE, STAFF, UPGRADES } from './game.js';
 import { mascot } from './art/people.js';
 
-export const TERMS_VERSION = 1, TERMS_DATE = '01/10/2026';
-export const PROJECT_URL = 'https://github.com/buicongnguyen/game-shop';
+export const TERMS_VERSION = '1.1001', TERMS_DATE = '05/10/2026';
+export const PROJECT_EMAIL = 'hellendaothanh@gmail.com';
 const TERMS_TITLE = 'Điều khoản chơi game', DECLINE_TITLE = 'Tiệm sẽ chờ bạn';
 const freezeRows = rows => Object.freeze(rows.map(row => Object.freeze(row)));
 
@@ -40,15 +40,26 @@ export const TERMS = freezeRows([
   { title: 'Tên tiệm là của riêng bạn', text: 'Tên tiệm bạn đặt chỉ nằm trên máy này và không được chia sẻ với ai. Cứ chọn một cái tên thật vui, không cần dùng tên thật hay thông tin cá nhân.' },
   { title: 'Chơi đẹp', text: 'Bản lưu là của bạn, muốn chơi theo cách nào cũng được. Có điều, bản lưu bị sửa tay có thể sẽ không mở được nữa.' },
   { title: 'Một bản tái hiện độc lập', text: 'Tiệm Mì Cay là bản tái hiện do người hâm mộ tự làm, với mã nguồn, hình vẽ, lời thoại và âm thanh hoàn toàn mới. Dự án không liên kết, cũng không được tài trợ hay bảo trợ bởi những người làm ra trò chơi đã truyền cảm hứng cho nó.' },
-  { title: 'Thay đổi và liên hệ', text: 'Khi điều khoản thay đổi, trò chơi sẽ hiện lại trang này và xin bạn đồng ý lần nữa trước khi vào tiệm. Góp ý hay báo lỗi, mời bạn ghé trang GitHub của dự án:', link: { href: PROJECT_URL, label: PROJECT_URL.replace(/^https?:\/\//, '') } },
+  { title: 'Thay đổi và liên hệ', text: 'Khi điều khoản thay đổi, trò chơi sẽ hiện lại trang này và xin bạn đồng ý lần nữa trước khi vào tiệm. Góp ý hay báo lỗi, mời bạn gửi thư tới email:', link: { href: `mailto:${PROJECT_EMAIL}`, label: PROJECT_EMAIL } },
 ]);
 
-export function termsAccepted(prefs) { return !!prefs?.terms && Number(prefs.terms.version) >= TERMS_VERSION; }
+export function compareVersions(a, b) {
+  const parse = v => String(v ?? '').trim().split('.').map(n => Number(n) || 0);
+  const pa = parse(a), pb = parse(b);
+  const len = Math.max(pa.length, pb.length);
+  for (let i = 0; i < len; i++) {
+    const na = pa[i] ?? 0, nb = pb[i] ?? 0;
+    if (na > nb) return 1;
+    if (na < nb) return -1;
+  }
+  return 0;
+}
+export function termsAccepted(prefs) { return !!prefs?.terms && compareVersions(prefs.terms.version, TERMS_VERSION) >= 0; }
 
 // The terms text: a small "updated" line, a short welcome and the numbered sections (numbers are drawn by CSS).
 export function termsBodyHTML(sections = TERMS) {
-  // A long address may only wrap after its slashes.
-  const link = item => item && /^https?:\/\//.test(item.href) ? ` <a href="${esc(item.href)}" target="_blank" rel="noopener noreferrer">${esc(item.label).split('/').join('/<wbr>')}</a>` : '';
+  // A long address may only wrap after its slashes or @.
+  const link = item => item && /^(?:https?:\/\/|mailto:)/.test(item.href) ? ` <a href="${esc(item.href)}"${item.href.startsWith('mailto:') ? '' : ' target="_blank" rel="noopener noreferrer"'}>${esc(item.label).split('/').join('/<wbr>')}</a>` : '';
   return `<p class="meta-updated">Cập nhật ngày ${esc(TERMS_DATE)} · phiên bản ${TERMS_VERSION}</p><p>${esc(TERMS_INTRO)}</p>`
     + `<ol class="meta-terms">${sections.map(section => `<li><h3>${esc(section.title)}</h3><p>${esc(section.text)}${link(section.link)}</p></li>`).join('')}</ol>`;
 }

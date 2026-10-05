@@ -646,7 +646,7 @@ function stamp(text, tone = 'good') { const host = $('.street'); if (!host || lo
 // termsSession keeps this visit's acceptance, so a browser that refuses to store it (full or blocked storage) still
 // lets the player in now; only the next visit asks again.
 let termsSession = null;
-function readTerms() { if (termsSession) return termsSession; try { const row = JSON.parse(localStorage.getItem(termsKey)); return row && Number.isInteger(row.version) ? row : null; } catch { return null; } }
+function readTerms() { if (termsSession) return termsSession; try { const row = JSON.parse(localStorage.getItem(termsKey)); return row && row.version !== undefined && row.version !== null && row.version !== '' ? row : null; } catch { return null; } }
 const termsOk = () => termsAccepted({ terms: readTerms() });
 function metaContext() { return { dialog, openModal, sfx, mascotSVG: (mood, key) => mascot(mood, { idPrefix: `meta-${key}-` }) }; }
 // The gate runs before entering a shop (new or continued) until the current terms are accepted.

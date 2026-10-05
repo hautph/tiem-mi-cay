@@ -14,6 +14,13 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const outArg = process.argv.slice(2).find(arg => arg.startsWith('--out='));
 const out = path.resolve(root, outArg ? outArg.slice('--out='.length) : 'dist');
+
+// If building standard release (not a test scratch folder), bump terms version & date
+if (!outArg) {
+  const bumpScript = path.join(root, 'tools/bump-version.mjs');
+  const { execFileSync } = await import('node:child_process');
+  execFileSync(process.execPath, [bumpScript], { stdio: 'inherit' });
+}
 const BUILD_ID_PLACEHOLDER = "const BUILD_ID = 'dev';";
 const PRECACHE_PLACEHOLDER = 'const PRECACHE_URLS = [];';
 const NOT_PRECACHED = new Set(['sw.js', '.nojekyll']);
